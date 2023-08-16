@@ -1,0 +1,47 @@
+version: "3.7"
+
+services:
+  # PHP service
+  pa-php:
+    container_name: PA-PHP
+    build:
+      context: ./php
+      args:
+        TIMEZONE: ${TIMEZONE}
+    volumes:
+      - ../app/www/public:/var/www/html
+    ports:
+      - ${PHP_9000}:9000
+    expose:
+      - 9000
+    restart: always
+    networks:
+      - php_apache_app
+      - db_network
+    
+  pa-apache:
+    container_name: PA-Apache
+    build:
+      context: ./apache
+    volumes:
+      - ../app/www/public:/var/www/html
+    args:
+        - PHP_SOCKET=php:9000
+    ports:
+      - ${APACHE_80}:80
+      - ${APACHE_443}:443
+    links:
+      - pa-php
+    restart: always
+    depends_on:
+      - pa-php
+    networks:
+      - php_apache_app
+      - db_network
+
+networks:
+  php_apache_app:
+    name: ${PROJECT_NETWORK}
+  db_network:
+    external: true
+    name: ${DB_NETWORK}
