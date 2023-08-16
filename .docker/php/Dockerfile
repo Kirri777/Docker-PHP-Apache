@@ -1,11 +1,14 @@
 # Set base image
-FROM php:8.2-fpm
+FROM php:8.2-apache
 
 # Set timezone argument
 ARG TIMEZONE
 
 # Copy php configuration file
 COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini
+
+# Copy apache configuration file
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y \
@@ -57,6 +60,11 @@ RUN curl https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-x64.tar.xz --outpu
     && npm install -g npm@latest \
     && npm config set fund false --location=global
 
+# Enable Apache rewrite module
+RUN a2enmod rewrite
+
+# Enable Apache expires module
+RUN a2enmod expires
 
 # Set the working directory
 WORKDIR /var/www

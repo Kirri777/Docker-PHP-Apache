@@ -9,3 +9,5 @@
 2. Create the file `./.docker/.env` by copying `./.docker/.env.example` and updating the `COMPOSE_PROJECT_NAME` and `port variables` if using multiple dockers.
 
 3. Navigate to the `./docker` folder and run `docker-compose up -d --build` to start the containers.
+
+4. To change apache root path to `/var/www/public`, edit the `./.docker/php/000-default.conf` file and update the `DocumentRoot`.

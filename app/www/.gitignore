@@ -1,4 +1,20 @@
-*
-!.gitignore
-!phpinfo.php
-!test.html
+# Log
+*.log
+
+# Cache
+cache/twig/*
+cache/smarty/*
+
+# Install
+/install/vendor/*
+/install/node_modules/*
+
+# Config
+_config/options.php
+
+# Delete files
+_del*
+_old*
+
+# test files
+test*

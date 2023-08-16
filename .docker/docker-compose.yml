@@ -9,32 +9,14 @@ services:
       args:
         TIMEZONE: ${TIMEZONE}
     volumes:
-      - ../app/www/public:/var/www/html
+      - ../app/www:/var/www
     ports:
       - ${PHP_9000}:9000
+      - ${APACHE_80}:80
+      - ${APACHE_443}:443
     expose:
       - 9000
     restart: always
-    networks:
-      - php_apache_app
-      - db_network
-    
-  pa-apache:
-    container_name: PA-Apache
-    build:
-      context: ./apache
-    volumes:
-      - ../app/www/public:/var/www/html
-    args:
-        - PHP_SOCKET=php:9000
-    ports:
-      - ${APACHE_80}:80
-      - ${APACHE_443}:443
-    links:
-      - pa-php
-    restart: always
-    depends_on:
-      - pa-php
     networks:
       - php_apache_app
       - db_network
