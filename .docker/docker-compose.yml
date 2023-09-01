@@ -4,6 +4,11 @@ services:
   # PHP service
   pa-php:
     container_name: PA-PHP
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 2048M
     build:
       context: ./php
       args:
