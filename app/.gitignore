@@ -1,4 +1,9 @@
 *
 !.gitignore
-!phpinfo.php
+!*phpinfo.php
 !test.html
+
+# phpinfo
+!www/
+!www/public/
+!www/public/phpinfo.php
